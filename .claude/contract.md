@@ -149,6 +149,23 @@ the editor hop for genuinely large or parallel write batches.
 
 ---
 
+## Git safety — pushing is ALWAYS the developer's call (MANDATORY)
+
+- **NEVER `git push` on your own.** Not after a commit, not after a fix round,
+  not because the task "feels finished." Ask first — or act only on an explicit
+  instruction in the CURRENT conversation. Approval for one push does NOT carry
+  over to the next.
+- Before proposing a push, state which gates ran: the Phase-4 review (or the
+  inline self-check for trivial diffs) and `precommit`. In a bridge instance,
+  `/cross-check` must have run for anything touching shared background jobs or
+  datastores.
+- `settings.json` backs this with a permission prompt on `git push` — do not
+  look for ways around it.
+- Force-pushes, tag pushes, and pushes to any branch other than the current
+  integration branch need an explicit, spelled-out instruction — never inferred.
+
+---
+
 ## Commit format
 
 ```

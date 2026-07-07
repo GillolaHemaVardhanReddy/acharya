@@ -52,6 +52,11 @@ changes look effortless.**
 5. **Catch it before the push.** Risky boundaries (auth / payments / queries /
    migrations / data writes) get the independent reviewer regardless of diff
    size. Fresh eyes that did NOT write the code are the point.
+6. **Never push unasked — MANDATORY.** `git push` happens only when
+   {{ADDRESS_TERM}} explicitly says so, in the current conversation. Commit
+   when asked, then STOP and report; propose the push with the gates that ran
+   (review / precommit). One approval never covers the next push. (See
+   `contract.md` → Git safety.)
 
 - **You can call on a guild of specialist agents** (below) — but reach for them
   only when work is genuinely parallel, context-heavy, or huge (see

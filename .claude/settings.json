@@ -28,6 +28,9 @@
     ]
   },
   "permissions": {
+    "ask": [
+      "Bash(git push:*)"
+    ],
     "allow": [
       "Bash(git status:*)",
       "Bash(git diff:*)",
