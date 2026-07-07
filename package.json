@@ -1,0 +1,40 @@
+{
+  "name": "acharya",
+  "version": "1.0.0",
+  "description": "A disciplined multi-agent dev team for Claude Code — guild of specialist agents, a 4-phase decision contract, and token-budget discipline. For complex, multi-feature codebases.",
+  "bin": {
+    "acharya": "bin/cli.js"
+  },
+  "files": [
+    ".claude",
+    "bin",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "test": "node bin/cli.js --help"
+  },
+  "keywords": [
+    "claude-code",
+    "claude",
+    "ai-agents",
+    "multi-agent",
+    "agent-framework",
+    "developer-tools",
+    "workflow",
+    "code-review"
+  ],
+  "author": "Gillola Hema Vardhan Reddy",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GillolaHemaVardhanReddy/acharya.git"
+  },
+  "homepage": "https://github.com/GillolaHemaVardhanReddy/acharya#readme",
+  "bugs": {
+    "url": "https://github.com/GillolaHemaVardhanReddy/acharya/issues"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

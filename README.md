@@ -88,12 +88,21 @@ Kept honest by tooling, not hope:
 ## Install (30 seconds)
 
 ```bash
-# 1. Copy the .claude/ folder into your repo root
-cp -r acharya/.claude /path/to/your-repo/
+# From your repo root — scaffolds .claude/ (refuses to clobber an existing one)
+npx acharya init
 
-# 2. Open Claude Code in your repo and run:
+# Then open Claude Code in your repo and run:
 /acharya-init
 ```
+
+<details>
+<summary>Manual install (without npm)</summary>
+
+```bash
+git clone https://github.com/GillolaHemaVardhanReddy/acharya
+cp -r acharya/.claude /path/to/your-repo/
+```
+</details>
 
 `/acharya-init` detects your stack from lockfiles and code fingerprints, asks you to confirm name/stack/paths, prunes the stack specialists you don't need, wipes any inherited skills, and drives `skill-maintainer` to generate **fresh skills for your codebase** — one per feature area, built in parallel. From then on maintenance is near zero.
 

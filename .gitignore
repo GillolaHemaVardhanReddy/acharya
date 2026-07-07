@@ -2,3 +2,4 @@
 .claude/reports/
 .claude/.skills-sync
 node_modules/
+*.tgz
