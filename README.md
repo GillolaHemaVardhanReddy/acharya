@@ -1,5 +1,10 @@
 # Acharya — a disciplined AI dev team for your codebase
 
+[![npm version](https://img.shields.io/npm/v/acharya)](https://www.npmjs.com/package/acharya)
+[![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+![node](https://img.shields.io/badge/node-%3E%3D18-brightgreen)
+![git host](https://img.shields.io/badge/git-GitHub%20%7C%20GitLab%20%7C%20Bitbucket-lightgrey)
+
 **A drop-in `.claude/` kit for [Claude Code](https://claude.com/claude-code) that turns one assistant into a managed guild of specialist engineers** — a lead who analyzes and asks before acting, a single cheap "hands" agent that types, an independent reviewer who never saw the diff being written, and stack specialists (SQL, analytics, queues) that are pruned automatically if your stack doesn't need them.
 
 Born inside a real production system (a multi-service booking platform mid-migration) and extracted into a portable shell anyone can adopt with one command.
@@ -57,6 +62,35 @@ Stack specialists carry a `requires` list — `/acharya-init` deletes the ones y
 
 The full contract lives in [`.claude/contract.md`](.claude/contract.md).
 
+One rule is absolute: **the kit never pushes on its own.** `contract.md` forbids it, the identity carries it as a standing reflex, and `settings.json` backs it with a harness-level permission prompt on `git push` — commits are drafted and confirmed, pushes are always yours.
+
+## What a session looks like
+
+```text
+> we need rate limiting on the public API
+
+Acharya: Standard tier (~15k). Reading the api-gateway + auth skills…
+
+── Phase 2: one batched checkpoint ────────────────────────────────
+  Scope?       ( ) Minimal — per-route guard
+               (•) Extensible — middleware + config table
+  Design?      (•) reuse existing redis client   ( ) new limiter module
+  Edge cases?  [x] burst on login   [ ] internal service calls
+────────────────────────────────────────── you pick, Acharya builds ──
+
+Acharya: Done — 4 files, +182 −7. Firing Netra (independent review)
+on the final diff…
+
+NETRA — FINDINGS
+  HIGH  gateway.js:84  limit key derives from user-id BEFORE auth →
+        unauthenticated requests all share one bucket. Fix: key on
+        IP pre-auth, user-id post-auth.
+  CROSS_IMPACT  webhooks → shares the middleware chain → AT_RISK
+        options: leave / add_guard / extend_properly
+
+Fix now, ticket, or accept? — one batch, you decide.
+```
+
 ## Token economics — the part that makes it affordable
 
 Multi-agent setups usually die by billing. Acharya is built around one number: **a subagent hop costs ~15× an inline pass.** So the kit enforces *altitude discipline*:
@@ -95,6 +129,8 @@ npx acharya init
 /acharya-init
 ```
 
+Also available: `npx acharya init --dry-run` (preview what would be written), `init --force` (update kit files; your skills/routing/local settings are always preserved), and `npx acharya doctor` (health-check an installed kit: files, config, skill drift vs HEAD).
+
 <details>
 <summary>Manual install (without npm)</summary>
 
@@ -111,7 +147,8 @@ Optional: `bash .claude/scripts/setup.sh` marks scripts executable and wires git
 ### Requirements
 
 - [Claude Code](https://claude.com/claude-code) (CLI or IDE)
-- Node.js (the hooks and helper scripts are plain Node/bash — no dependencies to install)
+- Node.js ≥ 18 (the hooks and helper scripts are plain Node/bash — no dependencies to install)
+- Any git host — GitHub, GitLab, Bitbucket, or a bare remote. The kit uses plain `git` only; nothing assumes a specific provider.
 
 ## What's in the box
 

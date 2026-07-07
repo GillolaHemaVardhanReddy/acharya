@@ -37,7 +37,7 @@ Parse into records: full-sha / short-sha / subject / body / author.
 - If neither parse works:
   - Type → infer from verbs (`add` → feat, `fix` → fix, etc.)
   - Skill → run `node .claude/scripts/affected-skills.js --range <sha>~..<sha>` to resolve via files
-- Bucket Bitbucket merge commits and `chore(release)` commits into a separate "Merges / Release plumbing" section.
+- Bucket host merge commits (GitHub / GitLab / Bitbucket PR merges) and `chore(release)` commits into a separate "Merges / Release plumbing" section.
 
 ### 3. Group
 - Skill (alphabetical) → Type (in priority order: feat, fix, perf, refactor, docs, chore, test, hotfix)
@@ -67,7 +67,7 @@ Parse into records: full-sha / short-sha / subject / body / author.
 - `x9y8z7w` <subject>
 
 ## Merges / Release plumbing
-- (collapsed) Bitbucket PR merges
+- (collapsed) PR/branch merge commits
 
 ---
 
