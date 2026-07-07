@@ -165,6 +165,22 @@ Multi-agent setups usually die by billing. Acharya is built around one number: *
 
 The tier is announced at task start so you see the spend before it's burned. Other rules: agents only for parallelism / context isolation / independence, one cheap writer for batch edits, decisions batched into one round, review once on the final diff — and **skills instead of re-reading**, which is the biggest saving: the kit remembers your codebase between sessions instead of re-deriving it.
 
+### Which agent runs on which model — and why
+
+Every agent pins the cheapest Claude model that is *safe* for its job. The principle: **cost follows consequence** — pay for intelligence only where a wrong-but-plausible answer is expensive, and never pay for reasoning where there's nothing to decide.
+
+| Model | Agents | Why this tier |
+|---|---|---|
+| **Haiku** (cheapest, fastest) | `editor` (Shilpi) · `precommit` (Dwarpal) | Pure mechanical work. The editor receives a **finished patch spec** — every decision was already made by a planner — so it just types. Precommit runs lint/type/drift gates. Zero design choices → zero reason to pay for reasoning. |
+| **Sonnet** (mid) | `feature` / `bug` / `extend` planners · `explorer` · `migration` · `redis-queue-engineer` · `release-notes` · `skill-updater` | Structured reasoning **on rails**: the contract dictates their phases, the skills hand them the hard-won context, and checklists constrain their output. They need competence, not genius — the guardrails do the heavy lifting. |
+| **Opus** (strongest) | `review` (Netra) · `mysql-query-builder` (Lekha) · `clickhouse-query-builder` (Kala) · `skill-maintainer` (Guru) | The seats where a plausible-looking mistake is the *most expensive thing in the system*: a missed bug ships to production; a wrong index melts a hot table; a subtly wrong skill poisons every future session that trusts it. Here the model cost is noise next to the error cost. |
+| *(your session model)* | the main thread — Acharya itself | Inherits whatever you chose for your session. The kit never silently upgrades your spend; it economizes on the *agents it spawns*, not on you. |
+
+Two deliberate asymmetries worth noticing:
+
+- **The thinking/typing split.** Planners reason on Sonnet, then hand a spec to the Haiku editor. You pay reasoning prices for reasoning and typing prices for typing — never reasoning prices for typing.
+- **The reviewer outranks the builders.** Work is *built* on Sonnet but *reviewed* on Opus. Cheap to write, expensive to judge — because the judge is the last line before your codebase, and a reviewer that rubber-stamps is worse than no reviewer at all.
+
 Skills stay honest through tooling: every commit gets an `Affected-skills:` footer, a sync marker tracks the last commit skills were updated for, and `/update-skills` (or `npx acharya doctor`) tells you when they've drifted.
 
 ---
