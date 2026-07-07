@@ -1,0 +1,9 @@
+{
+  "version": 1,
+  "_notes": [
+    "Glob -> skill routing map. Read by .claude/scripts/affected-skills.js.",
+    "Patterns are repo-root-relative. Supports ** (any depth) and * (single segment).",
+    "Regenerated per-skill when Guru (skill-maintainer) creates skills. Add an entry per skill."
+  ],
+  "rules": []
+}

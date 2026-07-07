@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "_about": "Team-wide Claude Code settings (Acharya kit). Project specifics live in .claude/acharya.config.json. Personal overrides go in .claude/settings.local.json (gitignored).",
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          { "type": "command", "command": "node $CLAUDE_PROJECT_DIR/.claude/scripts/acharya-context.js" },
+          { "type": "command", "command": "bash $CLAUDE_PROJECT_DIR/.claude/scripts/session-start-triage.sh" }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "matcher": ".*",
+        "hooks": [
+          { "type": "command", "command": "node $CLAUDE_PROJECT_DIR/.claude/scripts/suggest-agent.js" }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          { "type": "command", "command": "bash $CLAUDE_PROJECT_DIR/.claude/scripts/post-bash-skills-nudge.sh" }
+        ]
+      }
+    ]
+  },
+  "permissions": {
+    "allow": [
+      "Bash(git status:*)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(git show:*)",
+      "Bash(git rev-parse:*)",
+      "Bash(git branch:*)",
+      "Bash(git config --get:*)",
+      "Bash(git ls-files:*)",
+      "Bash(git grep:*)",
+      "Bash(git blame:*)",
+      "Bash(node .claude/scripts/affected-skills.js:*)",
+      "Bash(node $CLAUDE_PROJECT_DIR/.claude/scripts/affected-skills.js:*)",
+      "Bash(node .claude/scripts/acharya-init.js)",
+      "Bash(node $CLAUDE_PROJECT_DIR/.claude/scripts/acharya-init.js)",
+      "Bash(node .claude/scripts/acharya-context.js)",
+      "Bash(bash .claude/scripts/check-skills-sync.sh)",
+      "Bash(bash .claude/scripts/setup.sh)",
+      "Bash(node --version)",
+      "Bash(npm run lint:*)",
+      "Bash(npm test:*)"
+    ]
+  }
+}
